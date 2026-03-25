@@ -29,6 +29,7 @@ class ElectronMenuModel;
   BOOL isMenuOpen_;
   BOOL useDefaultAccelerator_;
   base::OnceClosure popupCloseCallback;
+  NSWindow* __strong popupWindow_;
 }
 
 // Builds a NSMenu from the pre-built model (must not be nil). Changes made
@@ -37,6 +38,10 @@ class ElectronMenuModel;
     useDefaultAccelerator:(BOOL)use;
 
 - (void)setPopupCloseCallback:(base::OnceClosure)callback;
+
+// Hold a strong reference to the popup's parent window. This prevents the
+// window from being deallocated while popUpMenuPositioningItem: is blocking.
+- (void)setPopupWindow:(NSWindow*)window;
 
 // Populate current NSMenu with |model|.
 - (void)populateWithModel:(electron::ElectronMenuModel*)model;

@@ -190,6 +190,10 @@ NSArray* ConvertSharingItemToNS(const SharingItem& item) {
   popupCloseCallback = std::move(callback);
 }
 
+- (void)setPopupWindow:(NSWindow*)window {
+  popupWindow_ = window;
+}
+
 - (void)populateWithModel:(electron::ElectronMenuModel*)model {
   if (!menu_)
     return;
@@ -226,6 +230,8 @@ NSArray* ConvertSharingItemToNS(const SharingItem& item) {
           FROM_HERE, std::move(popupCloseCallback));
     }
   }
+
+  popupWindow_ = nil;
 }
 
 // Creates a NSMenu from the given model. If the model has submenus, this can

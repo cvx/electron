@@ -944,6 +944,13 @@ describe('Menu module', function () {
         menu.closePopup();
       });
     }
+
+    it('does not crash when window is destroyed while popup menu is open', async () => {
+      const menuWillShow = once(menu, 'menu-will-show');
+      menu.popup({ window: w });
+      await menuWillShow;
+      w.destroy();
+    });
   });
 
   ifit(process.platform === 'darwin')(

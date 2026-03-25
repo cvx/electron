@@ -165,6 +165,9 @@ void MenuMac::PopupOnUI(const base::WeakPtr<NativeWindow>& native_window,
   [popup_controllers_[window_id]
       setPopupCloseCallback:std::move(close_callback)];
 
+  // Keep the window alive while the menu is showing.
+  [popup_controllers_[window_id] setPopupWindow:nswindow];
+
   if (frame && frame->render_frame_host()) {
     auto* rfh = frame->render_frame_host()->GetOutermostMainFrameOrEmbedder();
     if (rfh && rfh->IsRenderFrameLive()) {
